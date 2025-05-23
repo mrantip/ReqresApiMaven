@@ -21,6 +21,7 @@ public class GetListUsersTest {
         Response response = RestAssured
                 .given()
                 .when()
+                .headers("x-api-key", "reqres-free-v1")
                 .get(BASE_URL)
                 .then()
                 .statusCode(200)
