@@ -1,23 +1,28 @@
 package tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import models.UserData;
 import models.UserResponse;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
+@Epic("Работа с данными пользователей")
+@Feature("Получает инфорацию о пользователях")
 public class GetListUsersTest {
+    final String BASE_URL = "https://reqres.in/api/users";
+    final ObjectMapper objectMapper = new ObjectMapper();
 
+    @Story("Получение информации списке пользователей")
+    @Severity(SeverityLevel.MINOR)
     @Test
     public void testGetListUsers() throws Exception {
-        final String BASE_URL = "https://reqres.in/api/users";
-        final ObjectMapper objectMapper = new ObjectMapper();
-
+        step("Отправка GET-запроса");
         Response response = RestAssured
                 .given()
                 .when()
@@ -27,6 +32,7 @@ public class GetListUsersTest {
                 .statusCode(200)
                 .extract().response();
 
+        step("Десериализация json-ответа");
         UserResponse userResponse = objectMapper.readValue(response.asString(), UserResponse.class);
 
 
