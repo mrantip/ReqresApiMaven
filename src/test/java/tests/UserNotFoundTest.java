@@ -1,20 +1,23 @@
 package tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@Epic("Работа с данными пользователей")
+@Feature("Получает инфорацию о пользователях")
 public class UserNotFoundTest {
+    final String BASE_URL = "https://reqres.in/api/users";
 
+    @Story("Проверка получения данных о несуществующем пользователе")
+    @Severity(SeverityLevel.BLOCKER)
     @Test
     public void testUserNotFound() throws Exception {
-        final String BASE_URL = "https://reqres.in/api/users";
-        final ObjectMapper objectMapper = new ObjectMapper();
-
+        step("Get Resource List");
         Response response = RestAssured
                 .given()
                 .when()

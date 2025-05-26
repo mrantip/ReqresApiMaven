@@ -1,18 +1,23 @@
 package tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Epic("Работа ресурсами")
+@Feature("Инфа о ресурсах")
 public class SingleResourceNotFoundTest {
+    final String BASE_URL = "https://reqres.in/api/unknown";
+
+    @Story("Проверка получения данных о несуществующем ресурсе")
+    @Severity(SeverityLevel.BLOCKER)
     @Test
     public void testSingleResourceNotFound() throws Exception {
-        final String BASE_URL = "https://reqres.in/api/unknown";
-        final ObjectMapper objectMapper = new ObjectMapper();
-
+        step("Get Resource List");
         Response response = RestAssured
                 .given()
                 .when()
